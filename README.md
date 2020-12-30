@@ -30,7 +30,9 @@ autopy Go版本目前复刻接口如下
 
 7. 等待  `autopy.Sleep(1)`
 
-8. 根据ID点击 `autopy.ClickByID("arg")`
+8. 获取视图  `body,err := autopy.GetView()`
 
-9. 根据文本点击 `autopy.ClickByText("今日头条")`
+9. 根据ID点击 `autopy.ClickByID("arg")`
+
+10. 根据文本点击 `autopy.ClickByText("今日头条")`
 
