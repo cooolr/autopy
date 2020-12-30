@@ -4,6 +4,7 @@ import "fmt"
 import "time"
 import "strconv"
 import "net/http"
+import "io/ioutil"
 
 var server_url = "http://127.0.0.1:8020/?code="
 
@@ -21,6 +22,18 @@ func urlopen(url,action string) {
 	return
     }
     log("INFO",action+"执行成功")
+}
+
+func urlget(url,action string) (string,error){
+    resp,err := http.Get(url)
+    if err != nil{
+	log("ERROR",action+"执行失败\n"+err.Error())
+	return "",err
+    }
+    defer resp.Body.Close()
+    body,_ := ioutil.ReadAll(resp.Body)
+    log("INFO",action+"执行成功")
+    return string(body),nil
 }
 
 func str(number int) string {
@@ -56,6 +69,11 @@ func RECENTS() {
 
 func Capturer() {
     urlopen(server_url + "2,","截图")
+}
+
+func GetView() (string,error){
+    body,err := urlget(server_url+"getView,","获取视图")
+    return body,err
 }
 
 func ClickById(text string) {
