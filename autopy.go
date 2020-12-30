@@ -58,6 +58,10 @@ func Capturer() {
     urlopen(server_url + "2,","截图")
 }
 
+func ClickById(text string) {
+    urlopen(server_url+"getID,"+text,"点击ID")
+}
+
 func ClickByText(text string) {
     urlopen(server_url+"getText,"+text,"点击文字")
 }
