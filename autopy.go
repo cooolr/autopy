@@ -44,6 +44,10 @@ func str(number int) string {
 
 func Sleep(num float64) {
     time.Sleep(time.Duration(num) * time.Second)
+    local,_ := time.LoadLocation("Asia/Shanghai")
+    now := time.Now().In(local).Format("2006-01-02 15:04:05")
+    message := now+" [INFO] 等待"
+    fmt.Println(message,num,"秒执行成功")
 }
 
 func Click(x,y int) {
