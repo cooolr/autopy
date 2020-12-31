@@ -18,7 +18,7 @@ func log(level,message string) {
 }
 
 func urlopen(uri,action string) {
-    _,err := http.Get(Server_url+url.QueryEscape(uri))
+    _,err := http.Get(Server_url+uri)
     if err != nil{
 	log("ERROR",action+"执行失败\n"+err.Error())
 	return
@@ -27,7 +27,7 @@ func urlopen(uri,action string) {
 }
 
 func urlget(uri,action string) (string,error){
-    resp,err := http.Get(Server_url+url.QueryEscape(uri))
+    resp,err := http.Get(Server_url+uri)
     if err != nil{
 	log("ERROR",action+"执行失败\n"+err.Error())
 	return "",err
@@ -82,10 +82,10 @@ func ClickById(text string) {
 }
 
 func ClickByText(text string) {
-    urlopen("getText,"+text, "点击文字")
+    urlopen("getText,"+url.QueryEscape(text), "点击文字")
 }
 
 func MakeToast(text string) {
     data,_ := json.Marshal(map[string]string{"type":"Toast", "text":text})
-    urlopen(string(data), "makeToast")
+    urlopen(url.QueryEscape(string(data)), "makeToast")
 }
