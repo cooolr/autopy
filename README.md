@@ -24,7 +24,7 @@ autopy Go版本目前复刻接口如下
 
 4. 主页  `auotpy.HOME()`
 
-5. 菜单  `autopy.RECENTS()`
+5. 菜单  `autopy.MENU()`
 
 6. 截图  `autopy.Capturer()`
 
@@ -32,7 +32,9 @@ autopy Go版本目前复刻接口如下
 
 8. 获取视图  `body,err := autopy.GetView()`
 
-9. 根据ID点击 `autopy.ClickByID("arg")`
+9. 根据ID点击  `autopy.ClickByID("arg")`
 
-10. 根据文本点击 `autopy.ClickByText("今日头条")`
+10. 根据文本点击  `autopy.ClickByText("今日头条")`
+
+11. makeToast  `autopy.MakeToast("Hello World")`
 
