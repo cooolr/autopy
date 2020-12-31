@@ -3,10 +3,12 @@ package autopy
 import "fmt"
 import "time"
 import "strconv"
+import "net/url"
 import "net/http"
 import "io/ioutil"
+import "encoding/json"
 
-var server_url = "http://127.0.0.1:8020/?code="
+var Server_url = "http://127.0.0.1:8020/?code="
 
 func log(level,message string) {
     local,_ := time.LoadLocation("Asia/Shanghai")
@@ -15,8 +17,8 @@ func log(level,message string) {
     fmt.Println(_message)
 }
 
-func urlopen(url,action string) {
-    _,err := http.Get(url)
+func urlopen(uri,action string) {
+    _,err := http.Get(Server_url+url.QueryEscape(uri))
     if err != nil{
 	log("ERROR",action+"执行失败\n"+err.Error())
 	return
@@ -24,8 +26,8 @@ func urlopen(url,action string) {
     log("INFO",action+"执行成功")
 }
 
-func urlget(url,action string) (string,error){
-    resp,err := http.Get(url)
+func urlget(uri,action string) (string,error){
+    resp,err := http.Get(Server_url+url.QueryEscape(uri))
     if err != nil{
 	log("ERROR",action+"执行失败\n"+err.Error())
 	return "",err
@@ -45,41 +47,45 @@ func Sleep(num float64) {
 }
 
 func Click(x,y int) {
-    urlopen(server_url+"0,"+str(x)+","+str(y),"点击")
+    urlopen("0,"+str(x)+","+str(y), "点击")
     Sleep(0.1)
 }
 
 func Swipe(x1,y1,x2,y2,t int) {
-    urlopen(server_url+"1,"+str(x1)+","+str(y1)+","+str(x2)+
-    ","+str(y2)+","+str(t),"滑动")
+    urlopen("1,"+str(x1)+","+str(y1)+","+str(x2)+","+str(y2)+","+str(t), "滑动")
     Sleep(0.0023*float64(t))
 }
 
 func HOME() {
-    urlopen(server_url + "HOME,","主页键")
+    urlopen("HOME,", "主页键")
 }
 
 func BACK() {
-    urlopen(server_url + "BACK,","返回键")
+    urlopen("BACK,", "返回键")
 }
 
-func RECENTS() {
-    urlopen(server_url + "RECENTS,","菜单键")
+func MENU() {
+    urlopen("RECENTS,", "菜单键")
 }
 
 func Capturer() {
-    urlopen(server_url + "2,","截图")
+    urlopen("2,", "截图")
 }
 
 func GetView() (string,error){
-    body,err := urlget(server_url+"getView,","获取视图")
+    body,err := urlget("getView,", "获取视图")
     return body,err
 }
 
 func ClickById(text string) {
-    urlopen(server_url+"getID,"+text,"点击ID")
+    urlopen("getID,"+text, "点击ID")
 }
 
 func ClickByText(text string) {
-    urlopen(server_url+"getText,"+text,"点击文字")
+    urlopen("getText,"+text, "点击文字")
+}
+
+func MakeToast(text string) {
+    data,_ := json.Marshal(map[string]string{"type":"Toast", "text":text})
+    urlopen(string(data), "makeToast")
 }
