@@ -42,22 +42,26 @@ func str(number int) string {
     return strconv.Itoa(number)
 }
 
+func sleep(num float64) {
+    time.Sleep(time.Duration(num) * time.Second)
+}
+
 func Sleep(num float64) {
     time.Sleep(time.Duration(num) * time.Second)
     local,_ := time.LoadLocation("Asia/Shanghai")
     now := time.Now().In(local).Format("2006-01-02 15:04:05")
-    message := now+" [INFO] 等待"
-    fmt.Println(message,num,"秒执行成功")
+    message := now+" [INFO] Sleep:"
+    fmt.Println(message,num)
 }
 
 func Click(x,y int) {
     urlopen("0,"+str(x)+","+str(y), "点击")
-    Sleep(0.1)
+    sleep(0.1)
 }
 
 func Swipe(x1,y1,x2,y2,t int) {
     urlopen("1,"+str(x1)+","+str(y1)+","+str(x2)+","+str(y2)+","+str(t), "滑动")
-    Sleep(0.0023*float64(t))
+    sleep(0.0023*float64(t))
 }
 
 func HOME() {
