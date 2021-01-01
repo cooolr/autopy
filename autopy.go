@@ -111,7 +111,7 @@ func MakeToast(text string) {
     urlopen(url.QueryEscape(string(data)), "makeToast")
 }
 
-func FloatWindow(_id,_type,_text,_width,_height,_size,_x,_y string,_color []int) {
-    var data = FWdata{_id,_type,_color,_text,_width,_height,_size,_x,_y,"newly"}
-    fmt.Println(data)
+func SetFloatWindow(data FWdata) {
+    urlopen(string(json.Marshal(data)))
 }
+
