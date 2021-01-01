@@ -10,6 +10,19 @@ import "encoding/json"
 
 var Server_url = "http://127.0.0.1:8020/?code="
 
+type FWdata struct {
+    Id string `json:"id"`
+    Type string `json:"type"`
+    Color []int `json:"color"`
+    Text string `json:"text"`
+    Width string `json:"Width"`
+    Height string `json:"Height"`
+    Size string `json:"size"`
+    X string `json:"X"`
+    Y string `json:"Y"`
+    Operation string `json:"operation"`
+}
+
 func log(level,message string) {
     local,_ := time.LoadLocation("Asia/Shanghai")
     now := time.Now().In(local).Format("2006-01-02 15:04:05")
@@ -96,4 +109,9 @@ func ClickByText(text string) {
 func MakeToast(text string) {
     data,_ := json.Marshal(map[string]string{"type":"Toast", "text":text})
     urlopen(url.QueryEscape(string(data)), "makeToast")
+}
+
+func FloatWindow(_id,_type,_text,_width,_height,_size,_x,_y string,_color []int) {
+    var data = FWdata{_id,_type,_color,_text,_width,_height,_size,_x,_y,"newly"}
+    fmt.Println(data)
 }
