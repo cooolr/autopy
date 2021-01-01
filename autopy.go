@@ -112,6 +112,6 @@ func MakeToast(text string) {
 }
 
 func SetFloatWindow(data FWdata) {
-    urlopen(string(json.Marshal(data)))
+    urlopen(string(json.Marshal(data)), "FloatWindow")
 }
 
